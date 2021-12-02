@@ -24,8 +24,8 @@ body {
   padding: 0;
   margin: 0;
   overflow: hidden;
-  width: 100vw;
-  height: 100vh;
+  width: 100%;
+  height: 100%;
   user-select: none;
 }
 
@@ -34,8 +34,8 @@ body {
 #app {
   background-color: var(--app-color-background);
   color: var(--app-color-foreground);
-  width: 100vw;
-  height: 100vh;
+  width: 100%;
+  height: 100%;
   display: flex;
   align-items: stretch;
   gap: var(--gutter);
