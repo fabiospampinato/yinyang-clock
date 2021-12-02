@@ -7,8 +7,10 @@ const $BAD = document.getElementById ( 'bad' );
 const $THRESHOLD = document.getElementById ( 'threshold' );
 const $CLOCK = document.getElementById ( 'clock' );
 
+const OPTIONS = new URLSearchParams ( window.location.search );
+
 const DATABASE_NAMESPACE = 'yyc';
-const START_AT_MIDNIGHT = false;
+const START_AT_MIDNIGHT = OPTIONS.has ( 'midnight' );
 
 /* HELPERS */
 
