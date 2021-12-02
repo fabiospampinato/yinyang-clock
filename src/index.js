@@ -4,6 +4,7 @@
 const $APP = document.getElementById ( 'app' );
 const $GOOD = document.getElementById ( 'good' );
 const $BAD = document.getElementById ( 'bad' );
+const $SEPARATOR = document.getElementById ( 'separator' );
 const $THRESHOLD = document.getElementById ( 'threshold' );
 const $CLOCK = document.getElementById ( 'clock' );
 
@@ -12,6 +13,7 @@ const OPTIONS = new URLSearchParams ( window.location.search );
 const DATABASE_NAMESPACE = 'yyc';
 const MIDNIGHT_MODE = OPTIONS.has ( 'midnight' );
 const MINIMAL_MODE = OPTIONS.has ( 'minimal' );
+const AMOLED_MODE = OPTIONS.has ( 'amoled' );
 
 /* HELPERS */
 
@@ -53,7 +55,11 @@ const getRatio = () => {
 
 };
 
-const updateClass = () => {
+const updateClasses = () => {
+
+  $APP.classList.toggle ( 'is-midnight', MIDNIGHT_MODE );
+  $APP.classList.toggle ( 'is-minimal', MINIMAL_MODE );
+  $APP.classList.toggle ( 'is-amoled', AMOLED_MODE );
 
   $APP.classList.toggle ( 'is-good', State.good () );
   $APP.classList.toggle ( 'is-bad', !State.good () );
@@ -94,6 +100,15 @@ const updateBad = () => {
 
 };
 
+const updateSeparator = () => {
+
+  const percentage = `${getRatio () * 100}%`;
+
+  $SEPARATOR.style.left = percentage;
+  $SEPARATOR.style.top = percentage;
+
+};
+
 const updateReset = () => {
 
   if ( !MIDNIGHT_MODE ) return;
@@ -109,7 +124,8 @@ const update = () => {
   updateTimings ();
   updateGood ();
   updateBad ();
-  updateClass ();
+  updateSeparator ();
+  updateClasses ();
   updateClock ();
   updateReset ();
 
