@@ -174,7 +174,6 @@ update ();
 setInterval ( update, 1000 );
 
 $APP.addEventListener ( 'click', event => {
-  console.log ( event );
   if ( event.ctrlKey || event.metaKey ) {
     if ( !confirm ( 'Are you sure you want to reset the clock?' ) ) return;
     reset ();
@@ -184,6 +183,7 @@ $APP.addEventListener ( 'click', event => {
 });
 
 $APP.addEventListener ( 'touchstart', event => {
+  alert ( event.touches.length )
   if ( event.touches.length < 3 ) return;
   if ( !confirm ( 'Are you sure you want to reset the clock?' ) ) return;
   reset ();
