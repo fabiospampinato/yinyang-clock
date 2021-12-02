@@ -182,8 +182,7 @@ $APP.addEventListener ( 'click', event => {
   }
 });
 
-$APP.addEventListener ( 'touchstart', event => {
-  alert ( event.touches.length )
+$APP.addEventListener ( 'touchend', event => {
   if ( event.touches.length < 3 ) return;
   if ( !confirm ( 'Are you sure you want to reset the clock?' ) ) return;
   reset ();
