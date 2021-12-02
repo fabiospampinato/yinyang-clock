@@ -1,0 +1,124 @@
+
+/* VARIABLES */
+
+:root {
+  --app-color-background: #000000;
+  --app-color-foreground: #9f9f9f;
+  --radius: 12px;
+  --gutter: 15px;
+  --section-min-width: 1px;
+  --section-color-active: #3f3f3f;
+  --section-color-inactive: #000000;
+  --threshold-color: yellow;
+  --threshold-size: 1px;
+}
+
+/* RESET */
+
+* {
+  box-sizing: border-box;
+}
+
+html,
+body {
+  padding: 0;
+  margin: 0;
+  overflow: hidden;
+  width: 100%;
+  height: 100%;
+  user-select: none;
+}
+
+/* APP */
+
+#app {
+  background-color: var(--app-color-background);
+  color: var(--app-color-foreground);
+  width: 100%;
+  height: 100%;
+  display: flex;
+  align-items: stretch;
+  gap: var(--gutter);
+  padding: var(--gutter);
+}
+
+@media (orientation: landscape) {
+  #app {
+    flex-direction: row;
+  }
+}
+
+@media (orientation: portrait) {
+  #app {
+    flex-direction: column;
+  }
+}
+
+/* THRESHOLD */
+
+#threshold {
+  display: none;
+  background-color: var(--threshold-color);
+  position: absolute;
+}
+
+@media (orientation: landscape) {
+  #threshold {
+    top: 0;
+    bottom: 0;
+    left: 50%;
+    width: var(--threshold-size);
+    transform: translateX(-50%);
+  }
+}
+
+@media (orientation: portrait) {
+  #threshold {
+    left: 0;
+    right: 0;
+    top: 50%;
+    height: var(--threshold-size);
+    transform: translateY(-50%);
+  }
+}
+
+/* SECTION */
+
+#good,
+#bad {
+  flex-grow: .5;
+  border-radius: var(--radius);
+  min-width: var(--section-min-width);
+}
+
+/* IS GOOD */
+
+#app.is-good #good {
+  background-color: var(--section-color-active);
+}
+
+#app.is-good #bad {
+  background-color: var(--section-color-inactive);
+}
+
+/* IS BAD */
+
+#app.is-bad #good {
+  background-color: var(--section-color-inactive);
+}
+
+#app.is-bad #bad {
+  background-color: var(--section-color-active);
+}
+
+/* CLOCK */
+
+#clock {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Fira Sans', 'Droid Sans', 'Helvetica Neue', Arial, sans-serif;
+  font-size: 15vw;
+  font-variant-numeric: tabular-nums;
+}
