@@ -189,11 +189,3 @@ $APP.addEventListener ( 'touchend', event => {
 });
 
 navigator.wakeLock.request ( 'screen' );
-
-// window.onbeforeunload = () => 'Progress may be lost!';
-
-setTimeout ( () => {
-
-  $APP.requestFullscreen ( { navigationUI: 'hide' } );
-
-}, 1000 );
