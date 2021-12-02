@@ -1,0 +1,9 @@
+{
+  "private": true,
+  "name": "yinyang-clock",
+  "description": "A clock that keeps track of time spent yinning vs time spent yanging.",
+  "version": "1.0.0",
+  "scripts": {
+    "dev": "open src/index.html"
+  }
+}
