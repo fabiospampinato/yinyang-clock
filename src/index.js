@@ -99,10 +99,7 @@ const updateReset = () => {
 
   if ( ( State.goodMs () + State.badMs () ) < 86_400_000 ) return;
 
-  State.good ( false );
-  State.goodMs ( 0 );
-  State.badMs ( START_AT_MIDNIGHT ? getMillisecondsSinceMidnight () : 0 );
-  State.updateTimestamp ( Date.now () );
+  reset ();
 
 };
 
@@ -124,6 +121,15 @@ const flip = () => {
   State.good ( !State.good () );
 
   update ();
+
+};
+
+const reset = () => {
+
+  State.good ( false );
+  State.goodMs ( 0 );
+  State.badMs ( START_AT_MIDNIGHT ? getMillisecondsSinceMidnight () : 0 );
+  State.updateTimestamp ( Date.now () );
 
 };
 
@@ -167,7 +173,21 @@ update ();
 
 setInterval ( update, 1000 );
 
-$APP.addEventListener ( 'click', flip );
+$APP.addEventListener ( 'click', event => {
+  console.log ( event );
+  if ( event.ctrlKey || event.metaKey ) {
+    if ( !confirm ( 'Are you sure you want to reset the clock?' ) ) return;
+    reset ();
+  } else {
+    flip ();
+  }
+});
+
+$APP.addEventListener ( 'touchstart', event => {
+  if ( event.touches.length < 3 ) return;
+  if ( !confirm ( 'Are you sure you want to reset the clock?' ) ) return;
+  reset ();
+});
 
 navigator.wakeLock.request ( 'screen' );
 
