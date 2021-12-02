@@ -101,7 +101,8 @@ const updateReset = () => {
 
   State.good ( false );
   State.goodMs ( 0 );
-  State.badMs ( 0 );
+  State.badMs ( START_AT_MIDNIGHT ? getMillisecondsSinceMidnight () : 0 );
+  State.updateTimestamp ( Date.now () );
 
 };
 
