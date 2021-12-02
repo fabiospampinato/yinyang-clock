@@ -4,6 +4,10 @@
   "description": "A clock that keeps track of time spent yinning vs time spent yanging.",
   "version": "1.0.0",
   "scripts": {
+    "deploy": "git-directory-deploy --directory src --branch gh-pages",
     "dev": "open src/index.html"
+  },
+  "devDependencies": {
+    "git-directory-deploy": "^1.5.1"
   }
 }
