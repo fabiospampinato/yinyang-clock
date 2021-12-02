@@ -1,11 +1,18 @@
 {
   "start_url": ".",
   "name": "YinYang Clock",
-  "short_name": "YY Clock",
+  "short_name": "YinYang Clock",
   "description": "A clock that keeps track of time spent yinning vs time spent yanging.",
   "dir": "ltr",
   "lang": "en-US",
   "display": "standalone",
   "theme_color": "#000000",
-  "background_color": "#000000"
+  "background_color": "#000000",
+  "icons": [
+    {
+      "src": "icon.png",
+      "sizes": "680x680",
+      "type": "image/png"
+    }
+  ]
 }
