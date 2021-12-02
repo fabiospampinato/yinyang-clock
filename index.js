@@ -4,13 +4,16 @@
 const $APP = document.getElementById ( 'app' );
 const $GOOD = document.getElementById ( 'good' );
 const $BAD = document.getElementById ( 'bad' );
+const $SEPARATOR = document.getElementById ( 'separator' );
 const $THRESHOLD = document.getElementById ( 'threshold' );
 const $CLOCK = document.getElementById ( 'clock' );
 
 const OPTIONS = new URLSearchParams ( window.location.search );
 
 const DATABASE_NAMESPACE = 'yyc';
-const START_AT_MIDNIGHT = OPTIONS.has ( 'midnight' );
+const MIDNIGHT_MODE = OPTIONS.has ( 'midnight' );
+const MINIMAL_MODE = OPTIONS.has ( 'minimal' );
+const AMOLED_MODE = OPTIONS.has ( 'amoled' );
 
 /* HELPERS */
 
@@ -52,7 +55,11 @@ const getRatio = () => {
 
 };
 
-const updateClass = () => {
+const updateClasses = () => {
+
+  $APP.classList.toggle ( 'is-midnight', MIDNIGHT_MODE );
+  $APP.classList.toggle ( 'is-minimal', MINIMAL_MODE );
+  $APP.classList.toggle ( 'is-amoled', AMOLED_MODE );
 
   $APP.classList.toggle ( 'is-good', State.good () );
   $APP.classList.toggle ( 'is-bad', !State.good () );
@@ -65,7 +72,7 @@ const updateClock = () => {
   const seconds = Math.floor ( milliseconds / 1000 );
   const clock = getClock ( seconds );
 
-  $CLOCK.textContent = clock;
+  $CLOCK.textContent = MINIMAL_MODE ? '' : clock;
 
 };
 
@@ -93,9 +100,18 @@ const updateBad = () => {
 
 };
 
+const updateSeparator = () => {
+
+  const percentage = `${getRatio () * 100}%`;
+
+  $SEPARATOR.style.left = percentage;
+  $SEPARATOR.style.top = percentage;
+
+};
+
 const updateReset = () => {
 
-  if ( !START_AT_MIDNIGHT ) return;
+  if ( !MIDNIGHT_MODE ) return;
 
   if ( ( State.goodMs () + State.badMs () ) < 86_400_000 ) return;
 
@@ -108,7 +124,8 @@ const update = () => {
   updateTimings ();
   updateGood ();
   updateBad ();
-  updateClass ();
+  updateSeparator ();
+  updateClasses ();
   updateClock ();
   updateReset ();
 
@@ -128,7 +145,7 @@ const reset = () => {
 
   State.good ( false );
   State.goodMs ( 0 );
-  State.badMs ( START_AT_MIDNIGHT ? getMillisecondsSinceMidnight () : 0 );
+  State.badMs ( MIDNIGHT_MODE ? getMillisecondsSinceMidnight () : 0 );
   State.updateTimestamp ( Date.now () );
 
 };
@@ -163,7 +180,7 @@ const Database = {
 const State = {
   good: Database.observable ( 'good', false ),
   goodMs: Database.observable ( 'goodMs', 0 ),
-  badMs: Database.observable ( 'badMs', START_AT_MIDNIGHT ? getMillisecondsSinceMidnight () : 0 ),
+  badMs: Database.observable ( 'badMs', MIDNIGHT_MODE ? getMillisecondsSinceMidnight () : 0 ),
   updateTimestamp: Database.observable ( 'updateTimestamp', Date.now () )
 };
 

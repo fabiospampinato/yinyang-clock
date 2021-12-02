@@ -9,6 +9,8 @@
   --section-min-width: 1px;
   --section-color-active: #3f3f3f;
   --section-color-inactive: #000000;
+  --separator-color: #3f3f3f;
+  --separator-size: 5px;
   --threshold-color: yellow;
   --threshold-size: 1px;
 }
@@ -53,6 +55,37 @@ body {
     flex-direction: column;
   }
 }
+
+/* SEPARATOR */
+
+#separator {
+  display: none;
+  background-color: var(--separator-color);
+  position: absolute;
+  border-radius: var(--radius);
+}
+
+@media (orientation: landscape) {
+  #separator {
+    top: var(--gutter) !important;
+    bottom: var(--gutter) !important;
+    margin-left: calc(var(--gutter) / 4);
+    width: var(--separator-size);
+    transform: translateX(-50%);
+  }
+}
+
+@media (orientation: portrait) {
+  #separator {
+    left: var(--gutter) !important;
+    right: var(--gutter) !important;
+    margin-top: calc(var(--gutter) / 4);
+    height: var(--separator-size);
+    transform: translateY(-50%);
+  }
+}
+
+/* SECTION */
 
 /* THRESHOLD */
 
@@ -109,6 +142,18 @@ body {
 
 #app.is-bad #bad {
   background-color: var(--section-color-active);
+}
+
+/* IS AMOLED */
+
+#app.is-amoled #good,
+#app.is-amoled #bad,
+#app.is-amoled #clock {
+  display: none;
+}
+
+#app.is-amoled #separator {
+  display: block;
 }
 
 /* CLOCK */
