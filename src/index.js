@@ -10,7 +10,8 @@ const $CLOCK = document.getElementById ( 'clock' );
 const OPTIONS = new URLSearchParams ( window.location.search );
 
 const DATABASE_NAMESPACE = 'yyc';
-const START_AT_MIDNIGHT = OPTIONS.has ( 'midnight' );
+const MIDNIGHT_MODE = OPTIONS.has ( 'midnight' );
+const MINIMAL_MODE = OPTIONS.has ( 'minimal' );
 
 /* HELPERS */
 
@@ -65,7 +66,7 @@ const updateClock = () => {
   const seconds = Math.floor ( milliseconds / 1000 );
   const clock = getClock ( seconds );
 
-  $CLOCK.textContent = clock;
+  $CLOCK.textContent = MINIMAL_MODE ? '' : clock;
 
 };
 
@@ -95,7 +96,7 @@ const updateBad = () => {
 
 const updateReset = () => {
 
-  if ( !START_AT_MIDNIGHT ) return;
+  if ( !MIDNIGHT_MODE ) return;
 
   if ( ( State.goodMs () + State.badMs () ) < 86_400_000 ) return;
 
@@ -128,7 +129,7 @@ const reset = () => {
 
   State.good ( false );
   State.goodMs ( 0 );
-  State.badMs ( START_AT_MIDNIGHT ? getMillisecondsSinceMidnight () : 0 );
+  State.badMs ( MIDNIGHT_MODE ? getMillisecondsSinceMidnight () : 0 );
   State.updateTimestamp ( Date.now () );
 
 };
@@ -163,7 +164,7 @@ const Database = {
 const State = {
   good: Database.observable ( 'good', false ),
   goodMs: Database.observable ( 'goodMs', 0 ),
-  badMs: Database.observable ( 'badMs', START_AT_MIDNIGHT ? getMillisecondsSinceMidnight () : 0 ),
+  badMs: Database.observable ( 'badMs', MIDNIGHT_MODE ? getMillisecondsSinceMidnight () : 0 ),
   updateTimestamp: Database.observable ( 'updateTimestamp', Date.now () )
 };
 
